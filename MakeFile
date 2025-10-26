@@ -1,0 +1,2 @@
+intro: intro.c:
+	gcc -Wall -pedantic -Werror intro.c -o intro
