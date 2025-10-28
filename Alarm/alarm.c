@@ -94,7 +94,7 @@ int playback() {
 // Main funtion
 // Argc is number of command line argumnents
 // Argv is a list of strings of the command line arguments
-int main(int argc, char *argv[]) {
+int main(int arcm, char* argv[]) {
 
 	short int argpos= 1;
 
