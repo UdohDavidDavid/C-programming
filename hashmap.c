@@ -5,7 +5,7 @@
 #include <stdlib.h>		// Stuff like malloc and free
 
 // Table size
-#define TOTAL_SIZE 2
+#define TOTAL_SIZE 10000
 
 /*
  * entry_t is a pointer to memory allocated for the table
