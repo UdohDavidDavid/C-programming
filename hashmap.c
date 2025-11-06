@@ -65,6 +65,11 @@ ht_t *create()
  * and added them up
  *
  * They are far better ways to do this that allow minimal collisions
+ * -------------------------------
+ *  Flash forward later to now i adopted a method for hashing that
+ *  makes the hashes way more unique
+ *  ----------------------------------------
+ *  I also used uint64_t cus 32bit types truncated stuff before
  * */
 uint64_t hash(const char *key)
 {
@@ -79,6 +84,20 @@ uint64_t hash(const char *key)
 
 	return hash;
 }
+
+/*
+ * This block allocates new memory for the new size
+ * It sets all values to NULL
+ * It then updates the hashes to fit into the new size
+ *
+ * It then checks all values in the old entries and copies
+ * it into the new entries
+ *
+ * It then free the old entries and replaces it with the new
+ * entries
+ *
+ * Then it updates the size of the entry
+ * */
 
 void ht_resize(ht_t *hashmap, int new_size)
 {
@@ -204,8 +223,10 @@ void ht_set(ht_t *hashmap, const char *key, const char *value)
 
 void ht_get(ht_t *hashmap, const char *key)
 {
+	// Get the hash
 	unsigned int slot = hash(key) % hashmap->size;
 
+	// Checks if the entry exists and prints it
 	entry_t *entry = hashmap->entries[slot];
 	if (entry == NULL)
 	{
@@ -232,6 +253,12 @@ void ht_get(ht_t *hashmap, const char *key)
 	}
 }
 
+void ht_deactivate(entry_t ***entry, const char *key, int slot)
+{
+	strcpy((*entry)[slot]->key, key);
+	(*entry)[slot]->value = "Deleted";
+}
+
 void ht_del(ht_t *hashmap, const char *key)
 {
 	unsigned int slot = hash(key) % hashmap->size;
@@ -241,8 +268,7 @@ void ht_del(ht_t *hashmap, const char *key)
 	{
 		if (strcmp(hashmap->entries[slot]->key, key) == 0)
 		{
-			hashmap->entries[slot] = NULL;
-			printf("Done\n");
+			ht_deactivate(&hashmap->entries, key, slot);
 			return;
 		}
 		else {
@@ -276,6 +302,7 @@ int main(int argc, char **argv)
 	ht_set(hashmap, "College 2", "UTC");  // Set the values
 	ht_set(hashmap, "College 3", "Havant College");  // Set the values
 	ht_set(hashmap, "Another College", "Fareham College");  // Set the values
+	ht_del(hashmap, "College 1");
 	ht_dump(hashmap);
 	//
 	return 0;
