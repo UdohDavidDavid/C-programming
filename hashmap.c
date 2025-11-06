@@ -255,7 +255,6 @@ void ht_get(ht_t *hashmap, const char *key)
 
 void ht_deactivate(entry_t ***entry, const char *key, int slot)
 {
-	strcpy((*entry)[slot]->key, key);
 	(*entry)[slot]->value = "Deleted";
 }
 
