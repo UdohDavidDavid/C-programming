@@ -1,12 +1,8 @@
-// Standard input and output
 #include <stdio.h>
-// For messing with strings like we do later on
 #include <string.h>
-// Imma use this one for atoi() function
+// atoi() function - string to integer
 #include <stdlib.h>
-// I need the time in alarm duhhh
 #include <time.h>
-// I need sleep
 #include <unistd.h>
 // Music
 #include <SDL2/SDL.h>
@@ -19,20 +15,20 @@ void kickstart(char argv[]) {
 
 	char argstr[8];
 
-	// This bit copies the command line arg into the string
+    // Copy command line args into string
 	strncpy(argstr, argv, sizeof(argstr));
 
-	// This bit gets the hour, min, sec from the args given
+	// get the hour, min, sec from the args given
 	char argslist[3][3];
-	char * token = strtok(argstr, ":");
+	char * token = strtok(argstr, ":");  // Get the first token
 
 	// Extracting the other tokens
-	int i = 0; // Also dont put this inside the while loop
+	int i = 0;
 	while (token != NULL) {
 		// Assigning each token into a list
-		strcpy(argslist[i], token); // strcpy again cuz its still a string
+		strcpy(argslist[i], token);
 		i++;
-		token = strtok(NULL, ":");
+		token = strtok(NULL, ":");  // Get the remaining tokens (Returns NULL when done)
 	}
 
 	// Assigning hour, min, sec to the value of the array
@@ -52,7 +48,7 @@ void kickstart(char argv[]) {
 		// Format the time
 		time_t seconds = sec;
 		char buffer[100];
-		strftime(buffer, sizeof(buffer), "%H:%M:%S", gmtime(&seconds));
+		strftime(buffer, sizeof(buffer), "%H:%M:%S", gmtime(&seconds));  // Formate to 00:00:00
 		printf("\r%s", buffer); // Formated time
 		fflush(stdout);
 		// Reduce by 1
@@ -92,13 +88,11 @@ int playback() {
 }
 
 // Main funtion
-// Argc is number of command line argumnents
-// Argv is a list of strings of the command line arguments
 int main(int argc, char* argv[]) {
 
 	short int argpos= 1;
 
-	// If an argument's given run this bit
+	// If an argument's given run this
 	if (argc == 2 ) {
 
 		// The program expects an argument in the form <00:00:00>, which is 8 chars
@@ -108,7 +102,7 @@ int main(int argc, char* argv[]) {
 	}
 	// If not arguments run this bit
 	else {
-		printf("Nah\n");
+		printf("Please give argument in format <00:00:00>\n");
 	}
 	// You dont really need to specify a return value for the main func but i did anyway
 	return 0;

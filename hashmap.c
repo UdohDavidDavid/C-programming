@@ -102,9 +102,8 @@ uint64_t hash(const char *key)
 void ht_resize(ht_t *hashmap, int new_size)
 {
 	entry_t **entry = malloc(sizeof(entry_t*) * new_size);
-	for (int i = 0; i < new_size; i++) {
+	for (int i = 0; i < new_size; i++)
 		entry[i] = NULL;
-	}
 
 	for (int i = 0; i < hashmap->size; i++)
 	{
@@ -185,7 +184,8 @@ void ht_set(ht_t *hashmap, const char *key, const char *value)
 		hashmap->count++;
 		return;
 	}
-	else {
+	else
+	{
 		//Checks until it reaches a Null pointer
 		//
 		//Also be sure to replace values with hashmap->entries[slot]->key = ...
@@ -284,7 +284,8 @@ void ht_del(ht_t *hashmap, const char *key)
 void ht_dump(ht_t *hashmap)
 {
 	int i = 0;
-	while (i < hashmap->size) {
+	while (i < hashmap->size)
+	{
 		if (hashmap->entries[i] != NULL)
 		{
 			printf("slot[%d]:			%s - %s\n", i, hashmap->entries[i]->key, hashmap->entries[i]->value);
